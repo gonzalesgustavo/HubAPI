@@ -10,6 +10,10 @@ export default class SwitchBoard {
   async start(): Promise<void> {
     try {
       this.buttons.forEach(async (button) => {
+        console.log({
+          running: button.name,
+          state: button.state,
+        });
         if (button.state) {
           await button.control.on();
         }

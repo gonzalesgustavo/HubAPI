@@ -18,15 +18,21 @@ export class RouteSwitch implements Switch{
   on(): void {
     this.modules.forEach((module: Module) => {
       module.subRoutes.forEach((route: RouteObject) => {
+        let url = `/${this.baseURL}/${module.baseURL}/${route.path}`;
+        if((url.match(/\/\//g) || []).length > 0) {
+          url = url.replace('//', '');
+        }
+
         if (route.middleware && route.middleware.length > 0) {
           this._APP[route.method](
-            `${this.baseURL}/${module.baseURL}/${route.path}`,
+            url,
             route.middleware,
             route.control
           );
         }
+        
         this._APP[route.method](
-          `${this.baseURL}/${module.baseURL}/${route.path}`,
+          url,
           route.control
         );
       });

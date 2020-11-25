@@ -6,7 +6,7 @@ export class HomeModule implements Module {
   subRoutes: RouteObject[];
 
   constructor() {
-    this.baseURL = 'Home';
+    this.baseURL = '';
     this.subRoutes = [
       {
         path: '',

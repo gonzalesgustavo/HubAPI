@@ -2,6 +2,7 @@
 /dist
 /coverage
 /notes
+/logs
 
 *.log
 *.lock

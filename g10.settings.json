@@ -1,0 +1,6 @@
+{
+  "controllerDir": "../../src/Hub/routes/",
+  "testDir": "../../src/",
+  "databaseHandler": "mongoose",
+  "modelDir": "../../src/Hub/models/"
+}

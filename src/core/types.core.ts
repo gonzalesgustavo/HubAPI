@@ -58,3 +58,13 @@ export class Controller{
   static update?: (req: Request, res: Response, next?:NextFunction) => Promise<void | Error | any> | void;
   static remove?: (req: Request, res: Response, next?:NextFunction) => Promise<void | Error | any> | void;
 }
+
+export interface CustomResponse {
+  results: null | unknown[];
+  length?: number | 0;
+  success: boolean;
+  status?: number;
+  message?: string;
+  error?: null | undefined | string | unknown;
+  info: RequestInfo;
+}

@@ -13,6 +13,16 @@ export class HomeModule implements Module {
         method: Methods.GET,
         control: HomeController.index,
       },
+      {
+        path: '',
+        method: Methods.POST,
+        control: HomeController.create,
+      },
+      {
+        path: '/remove/:id',
+        method: Methods.DELETE,
+        control: HomeController.remove,
+      },
     ];
   }
 }

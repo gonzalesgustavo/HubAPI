@@ -19,10 +19,6 @@ const connection = async () => {
       useFindAndModify: false,
       useCreateIndex: true,
       useNewUrlParser: true,
-    },
-    (err) => {
-      if(err) console.log(err);
-      console.log("connected to mongoose db.");
     }
   );
 };

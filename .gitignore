@@ -3,6 +3,8 @@
 /coverage
 /notes
 /logs
+/Gen10-Generator
 
 *.log
 *.lock
+*.env

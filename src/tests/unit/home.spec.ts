@@ -1,11 +1,10 @@
-import trial from '../Hub/models/trial';
 import supertest from 'supertest';
-import Settings from "../Config";
+import Settings from "../../Config";
 import express from 'express';
-import CustomServer from "../server";
+import CustomServer from "../../server";
 import { Server } from "http";
 
-describe('home', () => {
+describe('Home Tests', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let app: express.Application;
   let runningServer: Server;
@@ -27,7 +26,7 @@ describe('home', () => {
     runningServer.close()
     customServer.connections().close()
   })
-
+  
   it(`gets information from the ${Settings.URL}`, async () => {
     const response = await request.get(`/${Settings.URL}`);
     expect(response.status).toBe(200);
@@ -46,4 +45,5 @@ describe('home', () => {
     const response = await request.delete(`/${Settings.URL}/remove/${id}`);
     expect(response.status).toBe(204);
   });
+
 })

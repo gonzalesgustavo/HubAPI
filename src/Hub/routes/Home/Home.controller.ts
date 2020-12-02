@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { Controller } from '../../../core/types.core';
-import logger from '../../../core/Utils/Winston';
+import { Controller } from '../../../Core/types.core';
+import logger from '../../../Core/Utils/Winston';
 import trial from '../../models/trial';
 import {Document} from 'mongoose';
-import Responder from '../../../core/Utils/Responder';
+import Responder from '../../../Core/Utils/Responder';
 export class HomeController extends Controller {
   static async index(req: Request, res: Response): Promise<void> {
     try {

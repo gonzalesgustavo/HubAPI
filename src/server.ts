@@ -1,13 +1,14 @@
 import { Application } from 'express';
 import cors from 'cors';
 import { json, urlencoded } from 'body-parser';
-import { MiddlewareSwitch } from './core/Switches/Middleware.switch';
+import { MiddlewareSwitch } from './Core/Switches/Middleware.switch';
 import Settings from './Config';
-import { RouteSwitch } from './core/Switches/Routes.switch';
+import { RouteSwitch } from './Core/Switches/Routes.switch';
 import { ROUTES } from './Hub/registry/route.registry';
-import SwitchBoard from './core/SwitchBoard/index';
+import SwitchBoard from './Core/SwitchBoard/index';
 import connection from './Database/Mongoose';
 import mongoose from 'mongoose';
+import logger from './Core/Utils/Winston';
 
 class CustomServer {
   application: Application;
@@ -19,7 +20,7 @@ class CustomServer {
     connection().then((db) => {
       if (db) {
         this.databaseConnection = db;
-        console.log('connection established to mongoose');
+        logger.info('connection established to mongoose');
       }
     });
     this.application = application;

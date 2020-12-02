@@ -10,7 +10,7 @@ const logger = createLogger({
     }),
     new transports.Console({
       level: 'info',
-      format: format.combine(format.timestamp(), format.json()),
+      format: format.combine(format.timestamp(), format.json(), format.colorize()),
     }),
   ],
 });

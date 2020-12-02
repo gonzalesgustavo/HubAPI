@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import path from 'path';
-import { ConfigurationManager } from '../core/Utils/ConfigurationManager';
+import { ConfigurationManager } from '../Core/Utils/ConfigurationManager';
 
 config({
   path: path.join(__dirname, '../../.env'),

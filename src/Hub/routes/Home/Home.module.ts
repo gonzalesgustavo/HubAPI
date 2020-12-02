@@ -1,4 +1,4 @@
-import { Methods, Module, RouteObject } from '../../../core/types.core';
+import { Methods, Module, RouteObject } from '../../../Core/types.core';
 import { HomeController } from './Home.controller';
 
 export class HomeModule implements Module {

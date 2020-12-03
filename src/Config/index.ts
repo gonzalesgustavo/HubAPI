@@ -10,6 +10,7 @@ const Settings = new ConfigurationManager({
   port: process.env.PORT || 3001,
   NODE_ENV: process.env.NODE_ENV,
   URL: 'trial',
+  logs: true,
   database: {
     user: process.env.MongoUserDev,
     password: process.env.MongoPassDev,
@@ -17,7 +18,14 @@ const Settings = new ConfigurationManager({
     baseDb: process.env.MongoRootDbDev,
     port: process.env.MongoPortDev, 
   },
-  session: null,
+  session: {
+    secret: 'some secret phrase',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  }
 });
 
 export default Settings;

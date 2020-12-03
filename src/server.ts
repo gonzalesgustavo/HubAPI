@@ -1,28 +1,30 @@
 import { Application } from 'express';
-import cors from 'cors';
-import { json, urlencoded } from 'body-parser';
 import { MiddlewareSwitch } from './Core/Switches/Middleware.switch';
 import Settings from './Config';
 import { RouteSwitch } from './Core/Switches/Routes.switch';
 import { ROUTES } from './Hub/registry/route.registry';
-import SwitchBoard from './Core/SwitchBoard/index';
+import SwitchBoard from './Core/Board/index';
 import connection from './Database/Mongoose';
-import mongoose from 'mongoose';
+import mongoose, { Mongoose } from 'mongoose';
 import logger from './Core/Utils/Winston';
+import { APPMIDDLEWARE } from './Hub/registry/app.middleware.registry';
+import { SessionSwitch } from './Core/Switches/Session.switch';
 
+connection().then((db) => {
+  if (db) {
+    logger.info('connection established to mongoose');
+  }
+});
 class CustomServer {
   application: Application;
   routes: RouteSwitch;
   middleware: MiddlewareSwitch;
+
+  session: SessionSwitch;
   switchboard: SwitchBoard;
-  databaseConnection: any;
+  databaseConnection?: typeof mongoose;
   constructor(application: Application) {
-    connection().then((db) => {
-      if (db) {
-        this.databaseConnection = db;
-        logger.info('connection established to mongoose');
-      }
-    });
+
     this.application = application;
     this.routes = new RouteSwitch({
       application: this.application,
@@ -30,10 +32,14 @@ class CustomServer {
       modules: ROUTES,
     });
 
-
     this.middleware = new MiddlewareSwitch({
       application: this.application,
-      middleware: [cors(), json(), urlencoded({ extended: false })],
+      middleware: APPMIDDLEWARE,
+    });
+
+    this.session = new SessionSwitch({
+      application: this.application,
+      sessionInfo: Settings.session,
     });
 
     this.switchboard = new SwitchBoard([
@@ -47,6 +53,11 @@ class CustomServer {
         state: true,
         control: this.routes,
       },
+      {
+        name: 'session',
+        state: true,
+        control: this.session,
+      },
     ]);
   }
   async startup() {
@@ -56,22 +67,21 @@ class CustomServer {
     await this.switchboard.stop([
       {
         name: 'middleware',
-        state: true,
+        state: false,
         control: this.middleware,
       },
       {
         name: 'routes',
-        state: true,
+        state: false,
         control: this.routes,
       },
+      {
+        name: 'session',
+        state: false,
+        control: this.session,
+      },
     ]);
-    await mongoose.disconnect();
-    await mongoose.connection.close();
-  }
-  get connections(): any {
-    return this.databaseConnection;
   }
 }
 
-
-export default CustomServer;
+// export default CustomServer;

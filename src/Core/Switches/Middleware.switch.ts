@@ -1,4 +1,5 @@
 import { Application } from 'express';
+import { Server } from 'http';
 import { Switch } from '../types.core';
 
 export class MiddlewareSwitch implements Switch {

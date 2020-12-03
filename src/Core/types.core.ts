@@ -10,6 +10,7 @@ export interface ApplicationSettings {
   port: number | string | undefined;
   NODE_ENV: string | undefined;
   URL: string;
+  logs: boolean | null;
 
   database: object | unknown | any | null;
   session: object | unknown | any | null;
@@ -19,6 +20,11 @@ export interface Switch {
   _APP: Application;
   on(): Promise<void | Error> | void;
   off?: Function;
+}
+
+export interface SwitchBoardControl {
+  name:string;
+  state: boolean;
 }
 
 export enum Methods {
@@ -67,4 +73,11 @@ export interface CustomResponse {
   message?: string;
   error?: null | undefined | string | unknown;
   info: RequestInfo;
+}
+
+export interface SessionInfo {
+  secret: string;
+  resave: boolean;
+  saveUninitialized: boolean;
+  cookie: { maxAge: number };
 }

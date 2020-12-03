@@ -1,3 +1,4 @@
+import Settings from '../../Config';
 import { HubButton } from '../types.core';
 import logger from '../Utils/Winston';
 
@@ -10,7 +11,9 @@ export default class SwitchBoard {
   async start(): Promise<void> {
     try {
       this.buttons.forEach(async (button) => {
-        // logger.info(`starting connection to ${button.name}, state is: ${button.state}`);
+        if(Settings.logs){
+          logger.info(`starting connection to ${button.name}, state is: ${button.state}`);
+        }
         if (button.state) {
           await button.control.on();
         }
@@ -23,8 +26,15 @@ export default class SwitchBoard {
     try {
       switches.forEach(async (button) => {
         if (!button.state && button.control.off) {
-          // logger.info(`closing connection to ${button.name}, state is: ${button.state}`);
+          if(Settings.logs){
+            logger.info(`starting connection to ${button.name}, state is: ${button.state}`);
+          }
           await button.control.off();
+        }
+        else if (!button.state){
+          if(Settings.logs){
+            logger.info(`starting connection to ${button.name}, state is: ${button.state}`);
+          }
         }
       });
     } catch (error) {

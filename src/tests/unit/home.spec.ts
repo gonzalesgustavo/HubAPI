@@ -1,8 +1,10 @@
 import supertest from 'supertest';
 import Settings from "../../Config";
 import express from 'express';
-import CustomServer from "../../server";
 import { Server } from "http";
+import mongoose from 'mongoose';
+import CustomServer from '../../Core/CustomServer';
+import connection from '../../Database/Mongoose';
 
 describe('Home Tests', () => {
   let request: supertest.SuperTest<supertest.Test>;
@@ -10,9 +12,10 @@ describe('Home Tests', () => {
   let runningServer: Server;
   let customServer: CustomServer;
   let id: string;
-  beforeAll(() => {
+  beforeAll(async () => {
     app = express();
     runningServer = app.listen(3020);
+    await connection();
     customServer = new CustomServer(app);
     customServer.startup();
   });
@@ -22,9 +25,10 @@ describe('Home Tests', () => {
   });
 
   afterAll(async () => {
+    await mongoose.disconnect();
+    await mongoose.connection.close();
     await customServer.taredown();
     runningServer.close()
-    customServer.connections().close()
   })
   
   it(`gets information from the ${Settings.URL}`, async () => {

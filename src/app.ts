@@ -1,13 +1,22 @@
-import Server from './server';
 import express from 'express';
 import mongoose from 'mongoose';
 import Settings from './Config';
+import connection from './Database/Mongoose';
+import logger from './Core/Utils/Winston';
+import CustomServer from './Core/CustomServer';
 
 export const app =  express();
 
-const newServer = new Server(app);
+const newServer = new CustomServer(app);
 
-newServer.startup();
+connection().then((db) => {
+  if (db) {
+    logger.info('connection established to mongoose');
+    newServer.startup();
+  }
+});
+
+
 
 const activeServer = app.listen(Settings.port);
 

@@ -11,7 +11,6 @@ describe('Home Tests', () => {
   let app: express.Application;
   let runningServer: Server;
   let customServer: CustomServer;
-  let id: string;
   beforeAll(async () => {
     app = express();
     runningServer = app.listen(3020);
@@ -35,19 +34,4 @@ describe('Home Tests', () => {
     const response = await request.get(`/${Settings.URL}`);
     expect(response.status).toBe(200);
   });
-
-  it(`should save a new item`, async () => {
-    const response = await request.post(`/${Settings.URL}`).send({
-      name: 'sam'
-    });
-    id = response.body._id;
-    expect(response.body.name).toEqual('sam');
-    expect(response.status).toBe(200);
-  });
-  
-  it(`should delete found object`, async () => {
-    const response = await request.delete(`/${Settings.URL}/remove/${id}`);
-    expect(response.status).toBe(204);
-  });
-
 })

@@ -10,7 +10,7 @@ const Settings = new ConfigurationManager({
   port: process.env.PORT || 3001,
   NODE_ENV: process.env.NODE_ENV,
   URL: 'trial',
-  logs: true,
+  logs: false,
   database: {
     user: process.env.MongoUserDev,
     password: process.env.MongoPassDev,
